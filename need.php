@@ -51,28 +51,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         body {
-            background-color: #f8f9fa; /* Light background color */
+            background-color: #f8f9fa; 
         }
         .container {
-            max-width: 800px; /* Limit width for better readability */
-            margin-top: 50px; /* Add some top margin */
+            max-width: 800px; 
+            margin-top: 50px; 
         }
         .form-control {
-            border-radius: 0; /* Remove default border-radius */
+            border-radius: 0; 
         }
         .form-label {
-            font-weight: bold; /* Make form labels bold */
+            font-weight: bold; 
         }
         .btn-primary {
-            background-color: #DC3545; /* Red color for submit button */
+            background-color: #DC3545; 
             border: none;
             width: 100%;
         }
         .btn-primary:hover, .btn-primary:focus {
-            background-color: #C82333; /* Darker shade on hover/focus */
+            background-color: #C82333; 
         }
         .toast-container {
-            z-index: 9999; /* Ensure toast appears above other content */
+            z-index: 9999; 
         }
         .toast-body {
             background-color: #DC3545;

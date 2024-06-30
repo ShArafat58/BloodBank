@@ -48,20 +48,20 @@
             text-align: center;
         }
         .about-title {
-            color: #28a745; /* Green */
+            color: #28a745; 
         }
         .why-donate-title {
-            color: #dc3545; /* Red */
+            color: #dc3545; 
         }
         .need-for-blood-title {
-            background-color: #17a2b8; /* Cyan */
+            background-color: #17a2b8; 
         }
         .blood-tips-title {
-            background-color: #ffc107; /* Yellow */
+            background-color: #ffc107; 
             color: black;
         }
         .who-help-title {
-            background-color: #6f42c1; /* Purple */
+            background-color: #6f42c1; 
         }
     </style>
 </head>
@@ -71,14 +71,14 @@
         <?php $active="home"; include('head.php'); ?>
     </div>
 
-    <!-- Hero Banner Section -->
+    
     <div class="hero-banner">
         <h1>Welcome to Our Blood Donation Website</h1>
         <p>Your donation can make a difference. Donate Blood, Save Lives</p>
         <button class="btn btn-primary" onclick="location.href='donate.php'">Donate Blood</button>
     </div>
 
-    <!-- About Us Section -->
+    
     <div class="content-section bg-light">
         <div class="container">
             <h2 class="about-title">About Us</h2>
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <!-- Why Donate Blood Section -->
+    
     <div class="content-section">
         <div class="container">
             <h2 class="why-donate-title">Why Donate Blood?</h2>
@@ -94,7 +94,7 @@
         </div>
     </div>
 
-    <!-- Three Sections in One Row -->
+    
     <div class="content-section bg-light">
         <div class="container">
             <div class="row">

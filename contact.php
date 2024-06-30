@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
     $email = $_POST['email'];
     $message = $_POST['message'];
 
-    // You can add code here to save the message to the database or send it via email
+  
 
     $message_sent = true;
 }
@@ -24,30 +24,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .gradient-text {
-            color: #ff7e5f; /* Adjust color as needed */
+            color: #ff7e5f; 
             font-weight: bold;
         }
         .section-title {
-            color: #00695c; /* Adjust color as needed */
+            color: #00695c; 
             font-weight: bold;
         }
         .contact-info {
-            background-color: #f8f9fa; /* Light gray background */
+            background-color: #f8f9fa; 
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         .contact-info h2 {
-            color: #00695c; /* Dark green */
+            color: #00695c; 
             font-weight: bold;
             margin-bottom: 15px;
         }
         .contact-info h4 {
-            color: #343a40; /* Dark gray */
+            color: #343a40; 
             font-weight: bold;
         }
         .contact-info a {
-            color: #007bff; /* Blue */
+            color: #007bff; 
             text-decoration: none;
         }
         .contact-info a:hover {
