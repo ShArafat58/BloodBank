@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "bloodbank";
+$dbname = "bbms";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -22,9 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender = $_POST['gender'];
     $b_group = $_POST['b_group'];
     $address = $_POST['address'];
+    $id = NULL;
 
-    $stmt = $conn->prepare("INSERT INTO donors (name, email, phone, age, gender, blood_group, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssss", $name, $email, $phone_number, $age, $gender, $b_group, $address);
+    $stmt = $conn->prepare("INSERT INTO donor_details (id, name, email, contact, age, blood_group, address) 
+    VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("isssiss", $id, $name, $email, $phone_number, $age, $b_group, $address);
 
     if ($stmt->execute()) {
         $message = "Successfully added donor!";

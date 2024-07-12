@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "bloodbank";
+$dbname = "bbms";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $b_group = $_POST['b_group'];
     $reason = $_POST['reason'];
 
-    $stmt = $conn->prepare("SELECT name, phone, address FROM donors WHERE blood_group = ?");
+    $stmt = $conn->prepare("SELECT name, contact, address FROM donor_details WHERE blood_group = ?");
     $stmt->bind_param("s", $b_group);
 
     if ($stmt->execute()) {
@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="form-group">
                         <label for="exampleInputGroup" class="form-label">Select Blood Group</label>
                         <select class="form-control" id="exampleInputGroup" name="b_group" required>
-                            <option value="A+" selected>A+</option>
+                            <option value="A+">A+</option>
                             <option value="A-">A-</option>
                             <option value="B+">B+</option>
                             <option value="B-">B-</option>
@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <tr>
                             <th scope="row"><?php echo $index + 1; ?></th>
                             <td><?php echo htmlspecialchars($donor['name']); ?></td>
-                            <td><?php echo htmlspecialchars($donor['phone']); ?></td>
+                            <td><?php echo htmlspecialchars($donor['contact']); ?></td>
                             <td><?php echo htmlspecialchars($donor['address']); ?></td>
                         </tr>
                     <?php endforeach; ?>
