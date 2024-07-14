@@ -24,19 +24,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'];
     $id = NULL;
 
-    $stmt = $conn->prepare("INSERT INTO donor_details (id, name, email, contact, age, blood_group, address) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isssiss", $id, $name, $email, $phone_number, $age, $b_group, $address);
+    if ($age >= 18) {
+        $stmt = $conn->prepare("INSERT INTO donor_details (id, name, email, contact, age, blood_group, address) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssiss", $id, $name, $email, $phone_number, $age, $b_group, $address);
 
-    if ($stmt->execute()) {
-        $message = "Successfully added donor!";
-        $status = "success";
+        if ($stmt->execute()) {
+            $message = "Successfully added donor!";
+            $status = "success";
+        } else {
+            $message = "Error: " . $stmt->error;
+            $status = "error";
+        }
+
+        $stmt->close();
     } else {
-        $message = "Error: " . $stmt->error;
+        $message = "Age should be 18+.";
         $status = "error";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -73,24 +78,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .btn-primary:hover, .btn-primary:focus {
             background-color: #45a049; 
         }
-        .toast-container {
-            z-index: 9999; 
-        }
-        .toast-body {
-            background-color: #4CAF50;
-            color: #fff;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
 <div class="header">
-    <?php $active = "donate";
-    include('head.php'); ?>
+    <?php $active = "donate"; include('head.php'); ?>
 </div>
 
 <div class="container">
     <h1 class="text-center mb-4">Donate Blood</h1>
+    <?php if (!empty($message)) : ?>
+        <div class="alert alert-<?php echo $status == 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+            <?php echo $message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     <form method="post">
         <div class="row">
             <div class="col">
@@ -154,35 +156,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 </div>
 
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body">
-            <?php echo $message; ?>
-        </div>
-    </div>
-</div>
-
 <br />
 <br />
 <br />
 <?php include('footer.php'); ?>
 
-
-
-<script>
-    $(document).ready(function() {
-        <?php if (!empty($message)) : ?>
-            var toast = new bootstrap.Toast(document.getElementById('toast'))
-            toast.show();
-        <?php endif; ?>
-    });
-
-</script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </body>
 </html>
