@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
     $email = $_POST['email'];
     $message = $_POST['message'];
 
-  
+    
 
     $message_sent = true;
 }
@@ -52,6 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
         }
         .contact-info a:hover {
             text-decoration: underline;
+        }
+        .toast-body {
+            background-color: #28a745; 
+            color: white;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -126,18 +131,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
     </div>
     <?php include('footer.php'); ?>
 
-
     <script>
         $(document).ready(function() {
             <?php if (isset($message_sent) && $message_sent): ?>
-            var toast = new bootstrap.Toast(document.getElementById('success-toast'));
-            toast.show();
+            $('#success-toast').toast({ delay: 3000 });
+            $('#success-toast').toast('show');
             <?php endif; ?>
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </body>
 
