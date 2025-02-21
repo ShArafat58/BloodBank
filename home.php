@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .hero-banner {
-            background-image: url('https://images.unsplash.com/photo-1621525466547-4ac135e85f59?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-image: url('https://images.unsplash.com/photo-1542884841-9f546e727bca?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
             height: 600px;
@@ -27,10 +27,12 @@
         .hero-banner h1 {
             font-size: 3rem;
             margin-bottom: 20px;
+            color:aqua;
         }
         .hero-banner p {
             font-size: 1.5rem;
             margin-bottom: 20px;
+            color: black;
         }
         .hero-banner button {
             font-size: 1.2rem;
