@@ -1,15 +1,47 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
-    $fullname = $_POST['fullname'];
-    $contactno = $_POST['contactno'];
-    $email = $_POST['email'];
-    $message = $_POST['message'];
+     
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $database = "bbms";
 
-    
+$conn = new mysqli($servername, $username, $password, $database);
 
-    $message_sent = true;
+
+    $fullname = trim($_POST['fullname']);
+    $contactno = trim($_POST['contactno']);
+    $email = trim($_POST['email']);
+    $message = trim($_POST['message']);
+
+    // Validate inputs (basic example)
+    if (empty($fullname) || empty($contactno) || empty($email) || empty($message)) {
+        $_SESSION['message_error'] = "All fields are required.";
+        header("Location: contact.php");
+        exit;
+    }
+
+    // Insert into database using prepared statement
+    $stmt = $conn->prepare("INSERT INTO messages (fullname, contactno, email, message) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $fullname, $contactno, $email, $message);
+
+    if ($stmt->execute()) {
+        $_SESSION['message_sent'] = true;
+    } else {
+        $_SESSION['message_error'] = "Failed to send message. Please try again.";
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    header("Location: contact.php"); // Redirect to prevent resubmission
+    exit;
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,37 +56,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .gradient-text {
-            color: #ff7e5f; 
+            color: #ff7e5f;
             font-weight: bold;
         }
+
         .section-title {
-            color: #00695c; 
+            color: #00695c;
             font-weight: bold;
         }
+
         .contact-info {
-            background-color: #f8f9fa; 
+            background-color: #f8f9fa;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .contact-info h2 {
-            color: #00695c; 
+            color: #00695c;
             font-weight: bold;
             margin-bottom: 15px;
         }
+
         .contact-info h4 {
-            color: #343a40; 
+            color: #343a40;
             font-weight: bold;
         }
+
         .contact-info a {
-            color: #007bff; 
+            color: #007bff;
             text-decoration: none;
         }
+
         .contact-info a:hover {
             text-decoration: underline;
         }
+
         .toast-body {
-            background-color: #28a745; 
+            background-color: #28a745;
             color: white;
             font-weight: bold;
         }
@@ -63,7 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
 
 <body>
     <div class="header">
-        <?php $active = "contact"; include('head.php'); ?>
+        <?php $active = "contact";
+        include('head.php'); ?>
     </div>
 
     <div id="page-container" style="margin-top:50px; position: relative;min-height: 84vh;">
@@ -107,13 +147,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
                             <h2 class="section-title">Contact Details</h2>
                             <br>
                             <p>
-                                <h4><strong>Address:</strong> Siddeshwari, Dhaka</h4>
+                            <h4><strong>Address:</strong> Siddeshwari, Dhaka</h4>
                             </p>
                             <p>
-                                <h4><strong>Contact Number:</strong> +880-12345678</h4>
+                            <h4><strong>Contact Number:</strong> +880-12345678</h4>
                             </p>
                             <p>
-                                <h4><strong>Email:</strong> <a href="mailto:shahriararafat20@gmail.com">shahriarhossain20@gmail.com</a></h4>
+                            <h4><strong>Email:</strong> <a href="mailto:shahriararafat20@gmail.com">shahriarhossain20@gmail.com</a></h4>
                             </p>
                         </div>
                     </div>
@@ -128,14 +168,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['send'])) {
                 Message sent successfully!
             </div>
         </div>
+        <div id="error-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body bg-danger text-white">
+                <?php echo $_SESSION['message_error'] ?? ''; ?>
+            </div>
+        </div>
     </div>
+
     <?php include('footer.php'); ?>
 
     <script>
         $(document).ready(function() {
-            <?php if (isset($message_sent) && $message_sent): ?>
-            $('#success-toast').toast({ delay: 3000 });
-            $('#success-toast').toast('show');
+            <?php if (isset($_SESSION['message_sent']) && $_SESSION['message_sent']): ?>
+                $('#success-toast').toast({
+                    delay: 3000
+                });
+                $('#success-toast').toast('show');
+                <?php unset($_SESSION['message_sent']); ?>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['message_error'])): ?>
+                $('#error-toast').toast({
+                    delay: 3000
+                });
+                $('#error-toast').toast('show');
+                <?php unset($_SESSION['message_error']); ?>
             <?php endif; ?>
         });
     </script>
